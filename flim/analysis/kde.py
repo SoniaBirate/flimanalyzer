@@ -147,7 +147,7 @@ class KDE(AbstractPlugin, Task):
             if self.params.get("return_plot") and not self.params["single_plot"]:
                 fig.tight_layout()
                 results[f"Plot: KDE {header}"] = fig
-            results[f"Table: KDE {header}"] = kde_data
+            #results[f"Table: KDE {header}"] = kde_data
         if self.params.get("return_plot") and self.params["single_plot"]:
             fig.tight_layout()
             results[f"Plot: KDE"] = fig

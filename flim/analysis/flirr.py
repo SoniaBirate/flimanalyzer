@@ -36,7 +36,7 @@ class FLIRRPlot(AbstractPlugin):
         super().__init__(name=name, **kwargs)
 
     def get_icon(self):
-        source = files(flim.resources).joinpath("scatter.png")
+        source = files(flim.resources).joinpath("flirr_analysis1.png")
         return wx.Bitmap(str(source))
 
     def get_required_categories(self):

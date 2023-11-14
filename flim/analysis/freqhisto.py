@@ -130,7 +130,7 @@ class FreqHisto(AbstractPlugin):
 
     def get_default_parameters(self):
         params = super().get_default_parameters()
-        params["bins"] = 100
+        params["bins"] = 30
         params["density"] = False
         params["cumulative"] = False
         params["histtype"] = "step"  # 'bar', 'barstacked', 'step', 'stepfilled'
@@ -188,15 +188,15 @@ class FreqHisto(AbstractPlugin):
         selfeatures = self.params["features"]
         histmax = data.iloc[:, 1:].max(axis=1).max()
         # defines how to get input for values
-        binspecs = {
-            "bins": [wx.SpinCtrl, {"min": 1, "max": 500, "initial": 100}],
+        binspecs = { #revised bins so that they can accept negative vals
+            "bins": [wx.SpinCtrl, {"min": 1, "max": 500, "initial": 30}],
             "min": [
                 wx.SpinCtrlDouble,
-                {"min": 0, "max": histmax, "initial": 0, "inc": 0.1},
+                {"min": -100, "max": histmax, "initial": 0, "inc": 0.1},
             ],
             "max": [
                 wx.SpinCtrlDouble,
-                {"min": 0, "max": histmax, "initial": histmax, "inc": 0.1},
+                {"min": -100, "max": histmax, "initial": histmax, "inc": 0.1},
             ],
         }
         dlg = FreqHistoConfigDlg(
@@ -230,7 +230,7 @@ class FreqHisto(AbstractPlugin):
         cumulative = self.params["cumulative"]
         self.stacked = self.params["stacked"]
         self.datatable = self.params["datatable"]
-        bins = 100
+        bins = 30
         for header in sorted(self.params["features"]):
             mrange = (data[header].min(), data[header].max())
             try:
@@ -242,7 +242,7 @@ class FreqHisto(AbstractPlugin):
                 self.params["featuresettings"][header] = {
                     "min": mrange[0],
                     "max": mrange[1],
-                    "bins": 100,
+                    "bins": 30,
                 }
             logging.debug(
                 f"\tcreating frequency histogram plot for {header} with {bins} bins,"

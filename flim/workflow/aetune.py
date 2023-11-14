@@ -16,6 +16,8 @@ from prefect.executors import DaskExecutor
 from prefect.executors.base import Executor
 from prefect.engine.results import LocalResult
 
+from importlib_resources import files
+
 import flim.analysis.ml.autoencoder as autoencoder
 import flim.resources
 from flim import utils
@@ -372,6 +374,10 @@ class AEWorkflow(AbsWorkFlow):
     def get_required_features(self):
         return ["any"]
 
+    # def get_icon(self):
+    #     source = files(flim.resources).joinpath("heatmap.png")
+    #     return wx.Bitmap(str(source))
+    
     def get_default_parameters(self):
         params = super().get_default_parameters()
         params.update(
