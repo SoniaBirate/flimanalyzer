@@ -203,6 +203,10 @@ class PCAnalysis(AbstractPlugin):
             data=principalComponents,
             columns=["PC %d" % x for x in range(1, principalComponents.shape[1] + 1)],
         )
+        pca_eigen_df = pd.DataFrame(
+            data=pca.components_,
+            columns=features,
+        )
         if self.params["keeporig"] and self.params["keepstd"]:
             standard_df = pd.DataFrame(
                 data=standard_data, columns=["%s\nstandardized" % c for c in features]
@@ -248,6 +252,7 @@ class PCAnalysis(AbstractPlugin):
         results = {
             "Table: PCA Components": pca_df,
             "Table: PCA Explained": pca_explained_df,
+            "Table: PCA Eigen": pca_eigen_df,
         }
         if self.params["explainedhisto"]:
             plot = pca_explained_df.set_index(pca_comp_label).plot.bar()
