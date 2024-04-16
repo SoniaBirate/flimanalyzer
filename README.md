@@ -25,20 +25,20 @@ Python package for analysis of Fluoresence Lifetime Imaging Microscopy (FLIM) da
 git clone https://github.com/uvaKCCI/flimanalyzer.git
 cd flimanalyzer
 conda env create -f environment.yml
-conda activate flimenv
-python setup.py install
+conda activate flimenv # the name for your environment may differ
+pip install -e .
 ```
 
 This will create a Conda environment `flimenv` that contains all the Python packages required to run the FLIM Analyzer application.
 
 **MacOS X Installation**
 
-Activate the Conda environment, install the MacOS specific python.app package, and patch the shebang of the flimanalyzer console script.
+Run the general installation commands, activate the Conda environment and install the MacOS specific python.app package. Then patch the shebang of the flimanalyzer console script.
 
 ```
-conda activate flimenv
+conda activate flimenv # the name for your environment may differ
 conda install python.app
-sed -i '' -e 's/bin\/python/python\.app\/Contents\/MacOS\/python/' $(which flimanalyzer)
+sed -i '' -e '1 s/^.*$/#!\/usr\/bin\/env python.app/' $(which flimanalyzer)
 ```
 
 ## Run the application

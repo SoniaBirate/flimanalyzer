@@ -30,7 +30,7 @@ from flim.data.concatdata import Concatenator
 from flim.data.mergedata import Merger
 from flim.analysis.aerun import RunAE
 from flim.analysis.aetraining import AETraining, AETrainingConfigDlg
-from flim.analysis.aesimulate import AESimulate
+from flim.analysis.aeaugment import AEAugment
 from flim.analysis.barplots import BarPlot
 from flim.analysis.heatmap import Heatmap
 from flim.analysis.kde import KDE
@@ -48,7 +48,7 @@ from flim.gui.dialogs import BasicAnalysisConfigDlg
 from flim.workflow.basicflow import AbsWorkFlow
 
 
-class AESimTuneConfigDlg(BasicAnalysisConfigDlg):
+class AEAugmentTuneConfigDlg(BasicAnalysisConfigDlg):
     def __init__(
         self,
         parent,
@@ -345,6 +345,7 @@ class AESimTuneConfigDlg(BasicAnalysisConfigDlg):
             self.workingdirtxt.SetLabel(dirname)
 
     def _get_selected(self):
+        logging.debug(f"epoches:{self.epoches_spinner.GetValue()}, batch_size:{self.batchsize_input.GetValue()}, learning_rate:{self.learning_input.GetValue()}, weight_decay:{self.weight_input.GetValue()}")
         params = super()._get_selected()
         params["epoches"] = self.epoches_spinner.GetValue()
         params["batch_size"] = [
@@ -367,7 +368,7 @@ class AESimTuneConfigDlg(BasicAnalysisConfigDlg):
 
 @plugin(plugintype="Workflow")
 class AEWorkflow(AbsWorkFlow):
-    def __init__(self, name="FLIM Data Simulation Tuning", **kwargs):
+    def __init__(self, name="FLIM Data Augmentation Tuning", **kwargs):
         super().__init__(name=name, **kwargs)
         # self.executor = None #DaskExecutor(address="tcp://172.18.75.87:8786")
 
@@ -416,7 +417,7 @@ class AEWorkflow(AbsWorkFlow):
         return params
 
     def run_configuration_dialog(self, parent, data_choices={}):
-        dlg = AESimTuneConfigDlg(
+        dlg = AEAugmentTuneConfigDlg(
             parent,
             f"Configuration: {self.name}",
             input=self.input,
@@ -480,13 +481,13 @@ class AEWorkflow(AbsWorkFlow):
         unpivottask = UnPivot()
         lineplottask = LinePlot()
         barplottask = BarPlot()
-        simtask = AESimulate()
+        simtask = AEAugment()
         heatmaptask = Heatmap()
         kdetask = KDE()
 
         with Flow(f"{self.name}", executor=executor, result=result) as flow:
             working_dir = Parameter("working_dir", self.params["working_dir"])
-            modelfile = f'AESim-{len(self.params["features"])}'
+            modelfile = f'AEAugment-{len(self.params["features"])}'
 
             timeseries = Parameter("timeseries", default=self.params["timeseries"])
             grouping = Parameter("grouping", default=self.params["grouping"])

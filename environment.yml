@@ -20,6 +20,7 @@ dependencies:
   - torchinfo=1.6.3
   - scikit-learn
   - seaborn
+  - setuptools_scm
   - xlsxwriter
   - networkx=2.5.1
   - wxpython=4.0.4

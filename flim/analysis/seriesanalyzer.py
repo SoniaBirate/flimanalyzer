@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import wx
 from importlib_resources import files
 import numpy as np
+from collections import OrderedDict
 
 import flim.resources
 from flim.plugin import AbstractPlugin, plugin
@@ -285,11 +286,17 @@ class SeriesAnalyzer(AbstractPlugin):
         categories = data.select_dtypes("category").columns.values
         features = self.params["features"]
         sfeatures = [f.split("\n") for f in features]
-        common = set(sfeatures[0]).intersection(*sfeatures[1:])
+        common_all = set(sfeatures[0]).intersection(*sfeatures[1:])
+        logging.debug(f"sfeatures: {sfeatures}")
+        logging.debug(f"common_all: {common_all}")
+        #ncommon_all = list(dict.fromkeys(sfeatures[0]).intersection(*sfeatures[1:]))
         common = [
-            f for f in sfeatures[0] if f in common
+            f for f in sfeatures[0] if f in common_all
         ]  # needed to ensure maintaining propper order
         uniquef = ["\n".join([f for f in s if f not in common]) for s in sfeatures]
+        #logging.debug(f"ncommon_all: {common_all}")
+        logging.debug(f"common: {common}")
+        logging.debug(f"uniquef: {uniquef}")
         label = "\n".join(common)
         if self.params["merge_input"]:
             cols = list(categories)

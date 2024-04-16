@@ -3,11 +3,8 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-#version = get_version(root='.', relative_to=__file__)
-
 setuptools.setup(
-    name="flimanalyzer",  # Replace with your own username
-    #version=version,
+    name="flimanalyzer",
     author="Karsten Siller",
     author_email="khsiller@gmail.com",
     description="FLIM Analyzer",

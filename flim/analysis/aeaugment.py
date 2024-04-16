@@ -31,7 +31,7 @@ from flim import utils
 from joblib import load
 
 
-class AESimConfigDlg(BasicAnalysisConfigDlg):
+class AEAugmentConfigDlg(BasicAnalysisConfigDlg):
     def __init__(
         self,
         parent,
@@ -206,8 +206,8 @@ class AESimConfigDlg(BasicAnalysisConfigDlg):
 
 
 @plugin(plugintype="Analysis")
-class AESimulate(AbstractPlugin):
-    def __init__(self, name="Autoencoder: Simulate", **kwargs):
+class AEAugment(AbstractPlugin):
+    def __init__(self, name="Autoencoder: Augment Data", **kwargs):
         super().__init__(name=name, **kwargs)
         self.variables = self.params["features"]
         self.modelfile = self.params["modelfile"]
@@ -254,7 +254,7 @@ class AESimulate(AbstractPlugin):
         return {"Table: Simulated": None}
 
     def run_configuration_dialog(self, parent, data_choices={}):
-        dlg = AESimConfigDlg(
+        dlg = AEAugmentConfigDlg(
             parent,
             f"Configuration: {self.name}",
             input=self.input,

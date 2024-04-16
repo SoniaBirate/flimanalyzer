@@ -35,7 +35,7 @@ from prefect.tasks.core.collections import List
 from prefect.tasks.core.constants import Constant
 
 from flim.analysis.aerun import RunAE
-from flim.analysis.aesimulate import AESimulate
+from flim.analysis.aeaugment import AEAugment
 from flim.analysis.aetraining import AETraining
 from flim.analysis.barplots import BarPlot
 from flim.analysis.heatmap import Heatmap

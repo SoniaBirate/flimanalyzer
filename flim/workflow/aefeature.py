@@ -31,7 +31,7 @@ from flim.data.mergedata import Merger
 from flim.data.sortdata import Sort
 from flim.analysis.aerun import RunAE
 from flim.analysis.aetraining import AETraining, AETrainingConfigDlg
-from flim.analysis.aesimulate import AESimulate
+from flim.analysis.aeaugment import AEAugment
 from flim.analysis.barplots import BarPlot
 from flim.analysis.heatmap import Heatmap
 from flim.analysis.kde import KDE
@@ -46,7 +46,7 @@ from flim.analysis.scatterplots import ScatterPlot
 from flim.analysis.barplots import BarPlot
 from flim.analysis.lineplots import LinePlot
 from flim.gui.dialogs import BasicAnalysisConfigDlg
-from flim.workflow.aetune import AESimTuneConfigDlg
+from flim.workflow.aetune import AEAugmentTuneConfigDlg
 from flim.workflow.basicflow import AbsWorkFlow
 
 
@@ -57,7 +57,7 @@ def list_to_dict(listofdict):
     return result
 
 
-class AEFeatureConfigDialog(AESimTuneConfigDlg):
+class AEFeatureConfigDialog(AEAugmentTuneConfigDlg):
     def __init__(
         self,
         parent,
