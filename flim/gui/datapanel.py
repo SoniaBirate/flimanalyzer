@@ -581,8 +581,9 @@ class PandasFrame(wx.Frame):
             self.Bind(wx.EVT_MENU, self.OnPopupItemSelected, mitem)
         for chitem in self.data[colheader].unique():
             mitem = menu.AppendCheckItem(-1, str(chitem))
-            mitem.Check(True)
-            self.Bind(wx.EVT_MENU, self.OnPopupItemSelected, mitem)
+            if mitem is not None:
+                mitem.Check(True)
+                self.Bind(wx.EVT_MENU, self.OnPopupItemSelected, mitem)
         menu.InsertSeparator(2)
         return menu
 
